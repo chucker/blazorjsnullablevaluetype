@@ -1,0 +1,32 @@
+﻿@page "/"
+
+@inject IJSRuntime JSRuntime
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@*<SurveyPrompt Title="How is Blazor working for you?" />*@
+
+@code {
+    struct MyStruct
+    {
+        public int X { get; set; }
+    }
+
+    class Foo
+    {
+        // change this to `MyStruct?` to reproduce
+        public MyStruct Anchor { get; set; }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var f = new Foo
+        {
+            Anchor = new MyStruct { X = 1 }
+        };
+
+        await JSRuntime.InvokeVoidAsync("jsTestMethod", f);
+    }
+}
